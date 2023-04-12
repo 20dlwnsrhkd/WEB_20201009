@@ -13,7 +13,7 @@ if (true){
 	let c_1 = 'var 접근';
 }
 //console.log(c);//Error?
-console.log(c_1);
+//console.log(c_1);
 let d = 5;
 //let d = '값 재할당';// Error?
 console.log(d);
