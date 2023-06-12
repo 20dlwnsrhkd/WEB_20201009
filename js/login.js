@@ -3,7 +3,8 @@ function login(){
     let id = document.querySelector("#floatingInput");
     let password = document.querySelector("#floatingPassword");
 	let check = document.querySelector("#idSaveCheck");
-    
+	
+	
 	// get_id 함수 호출 추가
     form.action = "index_login.html";
     form.method = "get";
@@ -18,37 +19,70 @@ function login(){
     }
     
     if(id.value.length === 0 || password.value.length === 0){
+		login_fail_count();
         alert("아이디와 비밀번호를 모두 입력해주세요.");
-    }else{        
+    }else{  
+		document.cookie = "login_fail_cnt = 0";
+		login_count();
 		session_set(); // 세션 생성
-        form.submit();
-    }
+		
+		form.submit();
+	}	
 }
 
 function logout(){
+	logout_count();
 	session_del(); // 세션 삭제
     location.href='../index.html';
 }
 
 function get_id(){
-    if(true){
-		decrypt_text();
+    var getParameters = function(paramName){ // 변수 = 함수(이름)
+    var returnValue; // 리턴값을 위한 변수 선언
+    var url = location.href; // 현재 접속 중인 주소 정보 저장
+    var parameters = (url.slice(url.indexOf('?') + 1, url.length)).split('&'); // ?기준 slice 한 후 split 으로 나눔
+        for(var i = 0; i < parameters.length; i++) { 
+		    var varName = parameters[i].split('=')[0];
+            
+            if (varName.toUpperCase() == paramName.toUpperCase()) {
+                returnValue = parameters[i].split('=')[1];
+                return decodeURIComponent(returnValue);
+            // 나누어진 값의 비교를 통해 paramName 으로 요청된 데이터의 값만 return
+			}
+		} // 2중 for문 끝
+	}; // 함수 끝
+	alert(getParameters('id') + '님 방갑습니다!'); // 메시지 창 출력
+	// 5분 후 자동 로그아웃 처리
+	setTimeout(logout(), 5 * 60 * 1000);
+}
+
+function login_check() {
+
+	let id = document.querySelector("#floatingInput");
+    let password = document.querySelector("#floatingPassword");
+	var cookieCheck = getCookie("login_ban");
+  
+	if(cookieCheck=='Y'){
+		alert("1분간 로그인을 할 수 없습니다.")
 	}
 	else{
-		var getParameters = function(paramName){ // 변수 = 함수(이름)
-			var returnValue; // 리턴값을 위한 변수 선언
-			var url = location.href; // 현재 접속 중인 주소 정보 저장
-			var parameters = (url.slice(url.indexOf('?') + 1, url.length)).split('&'); // ?기준 slice 한 후 split 으로 나눔
-			for(var i = 0; i < parameters.length; i++) { 
-				var varName = parameters[i].split('=')[0];
-				if (varName.toUpperCase() == paramName.toUpperCase()) {
-					returnValue = parameters[i].split('=')[1];
-					return decodeURIComponent(returnValue);
-            // 나누어진 값의 비교를 통해 paramName 으로 요청된 데이터의 값만 return
-				}
-			} // 2중 for문 끝
-		}; // 함수 끝
-		alert(getParameters('id') + '님 방갑습니다!'); // 메시지 창 출력
+		let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&.])[A-Za-z\d$@$!%*#?&.]{10,}$/;  
+		let emailRegex = /^([0-9a-zA-Z]+)@([0-9a-zA-Z]+)(\.[0-9a-zA-Z]+){1,2}$/;
+		if (!emailRegex.test(id.value)) {
+			login_fail_count();
+			alert("유효한 이메일 형식이 아닙니다. 다시 입력해주세요.");
+			return false;
+		}
+		else if (!passwordRegex.test(password.value)) {
+				login_fail_count();
+				alert("유효한 패스워드 형식이 아닙니다. 다시 입력해주세요.");
+				return false;
+			}
+		else{
+			login();
+		}
+					
+		
 	}
 }
 
@@ -59,6 +93,8 @@ function addJavascript(jsname) { // 자바스크립트 외부 연동
 	s.setAttribute('src',jsname);
 	th.appendChild(s);
 }
+
+addJavascript('/js/count.js');
 addJavascript('/js/security.js'); // 암복호화 함수
 addJavascript('/js/session.js'); // 세션 함수
 addJavascript('/js/cookie.js'); // 쿠키 함수

@@ -13,12 +13,18 @@ function getCookie(name) {
             for ( var index in cookie_array) {
                 var cookie_name = cookie_array[index].split("=");
                 
-                if (cookie_name[0] == "id") {
+                if (cookie_name[0] == name) {
                     return cookie_name[1];
                 }
             }
         }
         return ;
+}
+
+function deleteCookie(cookieName){
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() - 1);
+    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
 }
 
 function init(){ // 로그인 폼에 쿠키에서 가져온 아이디 입력
@@ -31,11 +37,5 @@ function init(){ // 로그인 폼에 쿠키에서 가져온 아이디 입력
     check.checked = true; 
     }
     session_check(); // 세션 유무 검사
-}
-
-function deleteCookie(cookieName){
-    var expireDate = new Date();
-    expireDate.setDate(expireDate.getDate() - 1);
-    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
 }
 
