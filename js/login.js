@@ -53,7 +53,9 @@ function get_id(){
 	}; // 함수 끝
 	alert(getParameters('id') + '님 방갑습니다!'); // 메시지 창 출력
 	// 5분 후 자동 로그아웃 처리
-	setTimeout(logout(), 5 * 60 * 1000);
+	setTimeout(alert("장시간 활동이 없어서 자동으로 로그아웃 합니다."),3*60*1000-1);
+	setTimeout(logout(), 3 * 60 * 1000);
+	
 }
 
 function login_check() {
