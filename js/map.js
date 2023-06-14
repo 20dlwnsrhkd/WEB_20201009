@@ -1,4 +1,4 @@
-/**var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+/*var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
         center: new kakao.maps.LatLng(37.37993970992644, 126.92883058189958), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
@@ -15,8 +15,8 @@ map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
 // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성
 var zoomControl = new kakao.maps.ZoomControl();
-map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);**/
-function addJavascript(jsname) { // 자바스크립트 외부 연동
+map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);*/
+/*function addJavascript(jsname) { // 자바스크립트 외부 연동
 	var th = document.getElementsByTagName('head')[0];
 	var s = document.createElement('script');
 	s.setAttribute('type','text/javascript');
@@ -25,7 +25,7 @@ function addJavascript(jsname) { // 자바스크립트 외부 연동
 }
 
 addJavascript('//dapi.kakao.com/v2/maps/sdk.js?appkey=9ae33a8bd34d74045f36ad0935e20901');
-
+*/
 
 
 // 마커를 담을 배열입니다
